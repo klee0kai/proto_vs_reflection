@@ -2,6 +2,7 @@ name: Deploy Button
 
 on:
   workflow_dispatch:
+  push:
 
 jobs:
   tests:
@@ -15,6 +16,9 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: gradle
+
+      - name: Installs
+        run: sudo apt-get install libprotobuf-dev protobuf-compiler
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Run compare tests
