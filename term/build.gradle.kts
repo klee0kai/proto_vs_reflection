@@ -1,7 +1,6 @@
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 
 plugins {
-    id("java")
     application
     id("com.github.gmazzo.buildconfig") version ("3.1.0")
     id("io.github.tomtzook.gradle-cmake") version ("1.2.2")
@@ -14,6 +13,10 @@ val nativeLibFullName = File(nativeLibPath, "myapplication/linux-amd64/libmyappl
 buildConfig {
     buildConfigField("String", "NATIVE_LIB_PATH", "\"${nativeLibFullName.absolutePath}\"")
 }
+application {
+    mainClass.set("com.example.Main")
+}
+
 
 cmake {
     targets {
@@ -39,10 +42,9 @@ protobuf {
     }
 }
 
-
 tasks.clean.dependsOn(tasks.cmakeClean)
-tasks.assemble.dependsOn(tasks.cmakeBuild)
-tasks.cmakeBuild.dependsOn(tasks.jar)
+tasks.classes.dependsOn(tasks.cmakeBuild)
+tasks.cmakeBuild.dependsOn(tasks.compileJava)
 
 dependencies {
     implementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
