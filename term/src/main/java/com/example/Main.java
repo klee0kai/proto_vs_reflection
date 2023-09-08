@@ -41,7 +41,7 @@ public class Main {
     private static void runTest(Function<SomeCmd, Void> bridge) {
         long startTime = System.currentTimeMillis();
 
-        long testCount = 10_000_000;
+        long testCount = 1000;
         long testProcessMark = testCount / 10;
 
         for (long i = testCount; i > 0; i--) {
